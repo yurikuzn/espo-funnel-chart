@@ -65,6 +65,8 @@ var EspoFunnel = {};
 
             var count = this.dataList.length;
 
+            this.cWidth = cWidth;
+
             var maxValue = this.getMaxValue();
 
             var centerX = this.centerX = cWidth / 2;
@@ -157,6 +159,8 @@ var EspoFunnel = {};
             var left = pos[2] + pos[3];
             var top = pos[0];
 
+            var toLeft = pos[3] > this.cWidth / 5;
+
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
             var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
 
@@ -170,8 +174,10 @@ var EspoFunnel = {};
 
             element.style.top = top + 'px';
             element.style.left = (left) + 'px';
-            element.style.transform = 'translate(-100%, 0)';
             element.style.pointerEvents = 'none';
+
+            if (toLeft)
+                element.style.transform = 'translate(-100%, 0)';
 
             this.tooltipElement = element;
 
