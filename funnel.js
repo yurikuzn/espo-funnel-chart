@@ -35,7 +35,7 @@ var EspoFunnel = {};
                 events: {},
                 showTooltip: true,
                 tooltipClassName: '',
-                tootlipStyleString: ';display:block;position:absolute;white-space:nowrap;',
+                tootlipStyleString: 'display:block;position:absolute;white-space:nowrap;',
                 callbacks: {},
             };
 
@@ -141,7 +141,7 @@ var EspoFunnel = {};
 
         showTooltip (index) {
             var style = this.params.tootlipStyleString;
-            var tooltipClassName = this.params.tootlipStyleString;
+            var tooltipClassName = this.params.tooltipClassName;
 
             var element = document.createElement('div');
             element.setAttribute('style', style);
@@ -157,8 +157,11 @@ var EspoFunnel = {};
             var left = pos[2] + pos[3];
             var top = pos[0];
 
-            var cLeft = this.element.getBoundingClientRect().left;
-            var cTop = this.element.getBoundingClientRect().top;
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
+
+            var cLeft = scrollLeft + this.element.getBoundingClientRect().left;
+            var cTop = scrollTop + this.element.getBoundingClientRect().top;
 
             left += cLeft;
             top += cTop;
@@ -166,12 +169,13 @@ var EspoFunnel = {};
             element.innerHTML = html;
 
             element.style.top = top + 'px';
-            element.style.left = left + 'px';
+            element.style.left = (left) + 'px';
+            element.style.transform = 'translate(-100%, 0)';
+            element.style.pointerEvents = 'none';
 
             this.tooltipElement = element;
 
             document.body.appendChild(element);
-
         }
 
         hideTooltip (index) {
