@@ -1,6 +1,6 @@
 {
   "name": "espo-funnel-chart",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Funnel chart for EspoCRM",
   "main": "funnel.js",
   "dependencies": {
