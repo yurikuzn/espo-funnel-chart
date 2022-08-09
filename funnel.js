@@ -1,5 +1,5 @@
-
 var EspoFunnel = {};
+window.EspoFunnel = EspoFunnel;
 
 (function (EspoFunnel) {
 
@@ -35,12 +35,15 @@ var EspoFunnel = {};
                 events: {},
                 showTooltip: true,
                 tooltipClassName: '',
-                tootlipStyleString: 'display:block;position:absolute;white-space:nowrap;',
+                tooltipStyleString: 'display:block;position:absolute;white-space:nowrap;',
                 callbacks: {},
             };
 
             for (var param in defaultParams) {
-                if (param in this.params) continue;
+                if (param in this.params) {
+                    continue;
+                }
+
                 this.params[param] = defaultParams[param];
             }
 
@@ -49,11 +52,13 @@ var EspoFunnel = {};
 
         getMaxValue () {
             var maxValue = 0;
+
             for (var item of this.dataList) {
                 if (item.value > maxValue) {
                     maxValue = item.value;
                 }
             }
+
             return maxValue;
         }
 
@@ -142,7 +147,7 @@ var EspoFunnel = {};
         }
 
         showTooltip (index) {
-            var style = this.params.tootlipStyleString;
+            var style = this.params.tooltipStyleString;
             var tooltipClassName = this.params.tooltipClassName;
 
             var element = document.createElement('div');
@@ -150,7 +155,10 @@ var EspoFunnel = {};
             element.setAttribute('class', tooltipClassName);
 
             var c = this.params.callbacks.tooltipHtml;
-            if (!c) return;
+
+            if (!c) {
+                return;
+            }
 
             var html = c(index);
 
@@ -176,8 +184,9 @@ var EspoFunnel = {};
             element.style.left = (left) + 'px';
             element.style.pointerEvents = 'none';
 
-            if (toLeft)
+            if (toLeft) {
                 element.style.transform = 'translate(-100%, 0)';
+            }
 
             this.tooltipElement = element;
 
@@ -190,14 +199,20 @@ var EspoFunnel = {};
 
         outlineItem (index) {
             var element = this.trapElementList[index];
-            if (!element) return;
+
+            if (!element) {
+                return;
+            }
 
             element.setAttribute('stroke', this.params.outlineColor);
         }
 
         cancelOutlineItem (index) {
             var element = this.trapElementList[index];
-            if (!element) return;
+
+            if (!element) {
+                return;
+            }
 
             element.setAttribute('stroke', this.getItemColor(index));
         }
@@ -232,9 +247,12 @@ var EspoFunnel = {};
 
         triggerEvent (name, o) {
             var c = this.params.events[name];
-            if (!c) return;
+
+            if (!c) {
+                return;
+            }
+
             c.call(this, o);
         }
     }
-
 }).call(this, EspoFunnel);
